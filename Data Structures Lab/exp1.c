@@ -1,98 +1,112 @@
 //S3 Datastructures Lab
 //Experiment 1
 /*
-Implementation of Stack and Multiple stacks using one dimensional array 
+Implementation of Stack operations using one dimensional array 
 */
 
-#include<stdio.h>
+#include <stdio.h>
+#define MAXSIZE 5
  
-int stack[100],choice,n,top,x,i;
-void push(void);
-void pop(void);
-void display(void);
-int main()
+struct stack
 {
-    top=-1;
-    printf("\n Enter the size of STACK[MAX=100]:");
-    scanf("%d",&n);
-    printf("\n\t STACK OPERATIONS USING ARRAY");
-    printf("\n\t--------------------------------");
-    printf("\n\t 1.PUSH\n\t 2.POP\n\t 3.DISPLAY\n\t 4.EXIT");
-    do
+    int stk[MAXSIZE];
+    int top;
+};
+typedef struct stack STACK;
+STACK s;
+ 
+void push(void);
+int  pop(void);
+void display(void);
+ 
+void main ()
+{
+    int choice;
+    int option = 1;
+    s.top = -1;
+ 
+    printf ("STACK OPERATION\n");
+    while (option)
     {
-        printf("\n Enter the Choice:");
-        scanf("%d",&choice);
-        switch(choice)
+        printf ("------------------------------------------\n");
+        printf ("      1    -->    PUSH               \n");
+        printf ("      2    -->    POP               \n");
+        printf ("      3    -->    DISPLAY               \n");
+        printf ("      4    -->    EXIT           \n");
+        printf ("------------------------------------------\n");
+ 
+        printf ("Enter your choice\n");
+        scanf    ("%d", &choice);
+        switch (choice)
         {
-            case 1:
-            {
-                push();
-                break;
-            }
-            case 2:
-            {
-                pop();
-                break;
-            }
-            case 3:
-            {
-                display();
-                break;
-            }
-            case 4:
-            {
-                printf("\n\t EXIT POINT ");
-                break;
-            }
-            default:
-            {
-                printf ("\n\t Please Enter a Valid Choice(1/2/3/4)");
-            }
-                 
+        case 1:
+            push();
+            break;
+        case 2:
+            pop();
+            break;
+        case 3:
+            display();
+            break;
+        case 4:
+            return;
+        }
+        fflush (stdin);
+        printf ("Do you want to continue(Type 0 or 1)?\n");
+        scanf    ("%d", &option);
+    }
+}
+/*  Function to add an element to the stack */
+void push ()
+{
+    int num;
+    if (s.top == (MAXSIZE - 1))
+    {
+        printf ("Stack is Full\n");
+        return;
+    }
+    else
+    {
+        printf ("Enter the element to be pushed\n");
+        scanf ("%d", &num);
+        s.top = s.top + 1;
+        s.stk[s.top] = num;
+    }
+    return;
+}
+/*  Function to delete an element from the stack */
+int pop ()
+{
+    int num;
+    if (s.top == - 1)
+    {
+        printf ("Stack is Empty\n");
+        return (s.top);
+    }
+    else
+    {
+        num = s.stk[s.top];
+        printf ("poped element is = %dn", s.stk[s.top]);
+        s.top = s.top - 1;
+    }
+    return(num);
+}
+/*  Function to display the status of the stack */
+void display ()
+{
+    int i;
+    if (s.top == -1)
+    {
+        printf ("Stack is empty\n");
+        return;
+    }
+    else
+    {
+        printf ("\n The status of the stack is \n");
+        for (i = s.top; i >= 0; i--)
+        {
+            printf ("%d\n", s.stk[i]);
         }
     }
-    while(choice!=4);
-    return 0;
-}
-void push()
-{
-    if(top>=n-1)
-    {
-        printf("\n\tSTACK is over flow");
-         
-    }
-    else
-    {
-        printf(" Enter a value to be pushed:");
-        scanf("%d",&x);
-        top++;
-        stack[top]=x;
-    }
-}
-void pop()
-{
-    if(top<=-1)
-    {
-        printf("\n\t Stack is under flow");
-    }
-    else
-    {
-        printf("\n\t The popped elements is %d",stack[top]);
-        top--;
-    }
-}
-void display()
-{
-    if(top>=0)
-    {
-        printf("\n The elements in STACK \n");
-        for(i=top; i>=0; i--)
-            printf("\n%d",stack[i]);
-        printf("\n Press Next Choice");
-    }
-    else
-    {
-        printf("\n The STACK is empty");
-    }
-    
+    printf ("\n");
 }
